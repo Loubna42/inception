@@ -1,0 +1,44 @@
+version: '3.9'
+services:
+
+  nginx:
+    build: requirements/nginx/
+    container_name: nginx
+    ports:
+      - "443:443"
+    volumes:
+       - website:/var/www/html
+    networks:
+     - lberrada_network
+    restart: always
+
+  mariadb:
+    build: requirements/mariadb/
+    container_name: mariadb
+    expose:
+      - "3306"
+    volumes:
+     - mariadb:/var/lib/mysql
+    networks:
+      - lberrada_network
+    restart: always
+    environment:
+      MYSQL_ROOT_PWD:   ${MYSQL_ROOT_PWD}
+      WP_DATABASE_NAME: ${WP_DATABASE_NAME}
+      WP_DATABASE_USR:  ${WP_DATABASE_USR}
+      WP_DATABASE_PWD:  ${WP_DATABASE_PWD}
+networks:
+  lberrada_network:
+
+volumes:
+  website:
+    driver_opts:
+      type: none
+      device: /home/lberrada/data/website
+      o: bind
+
+  mariadb:
+    driver_opts:
+      type: none
+      device: /home/lberrada/data/mariadb
+      o: bind
