@@ -6,7 +6,7 @@ all: $(NAME)
 $(NAME):
 	mkdir -p /home/lberrada/data/website
 	mkdir -p /home/lberrada/data/mariadb
-	mkdir -p /home/lberrada/data/data_2
+	#mkdir -p /home/lberrada/data/data_2
 	docker-compose -f ${SRC} up --build -d 
 
 clean:
